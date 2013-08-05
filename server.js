@@ -16,9 +16,9 @@
 		if (path.indexOf("..") != -1) {
 		    path = '/';
 		}
-		if(path == '/') {
-			// 「/」のリクエストのときは、index.htmlと読み替える
-		    path = '/index.html';
+		if(path.length-1 == path.lastIndexOf('/')) {
+			// リクエストが「/」で終わっている場合、index.htmlをつける。
+		    path += 'index.html';
 		}
 		fs.readFile(documentRoot + path, function(error, data){
 		    if(error) {
@@ -39,6 +39,7 @@
 					case 'gif':                          mime = 'image/gif';break;
 					case 'jpg': case 'jpeg': case 'jpe': mime = 'image/jpeg';break;
 					case 'png':                          mime = 'image/png';break;
+					case 'svg':                          mime = 'image/svg+xml';break;
 				}
 				response.writeHead(200, { 'Content-Type': mime });
 				response.write(data);
